@@ -31,6 +31,7 @@ export async function GET(request) {
     const id = searchParams.get("id")
     const name = searchParams.get("name")
     const category = searchParams.get("category")
+    const limit = searchParams.get("limit")
     const token = request.headers.get('authorization')?.split(' ')[1]
 
     if (!token) {
@@ -88,12 +89,29 @@ export async function GET(request) {
                 data: "data tidak ada"
             })
         }
+    } else if (limit) {
+        const books = await getData("book")
+        const book = books.slice(0, limit)
+        if (book.length != 0) {
+            return res.json({
+                status: 200,
+                message: "data ditemukan",
+                data: book
+            })
+        } else {
+            return res.json({
+                status: 404,
+                message: "data tidak ditemukan",
+                data: "data tidak ada"
+            })
+        }
     } else {
         const books = await getData("book")
         return res.json({
             status: 200,
             message: "data ditemukan",
-            data: books
+            data: books,
+            token: token
         })
     }
 }
