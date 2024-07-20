@@ -93,8 +93,7 @@ export async function GET(request) {
         return res.json({
             status: 200,
             message: "data ditemukan",
-            data: books,
-            token: token
+            data: books
         })
     }
 }
