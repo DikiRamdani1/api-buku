@@ -32,7 +32,11 @@ export async function GET(request) {
             }
         } else {
             const books = await getDataNew("book")
-            return res.json({status: 200, message: "data behasil ditemukan", data: books})
+            return res.json({status: 200, message: "data behasil ditemukan", data: books}, {
+            headers: {
+               'Cache-Control': 'no-store'
+            }
+            })
         }
     } catch (error) {
         return res.json({status: 500, message: "data gagal ditemukan", data: "data tidak ada"})
